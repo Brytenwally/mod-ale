@@ -1881,7 +1881,7 @@ namespace LuaPlayer
         uint16 currVal = ALE::CHECKVAL<uint16>(L, 4);
         uint16 maxVal = ALE::CHECKVAL<uint16>(L, 5);
 
-        player->SetSkill(id, currVal, maxVal, step);
+        player->SetSkill(id, step, currVal, maxVal);
         return 0;
     }
 
@@ -3561,8 +3561,19 @@ namespace LuaPlayer
         uint32 glyphId = ALE::CHECKVAL<uint32>(L, 2);
         uint32 slotIndex = ALE::CHECKVAL<uint32>(L, 3);
 
+        // Remove the effect of the old glyph if it exists
+        uint32 oldGlyphId = player->GetGlyph(slotIndex);
+        if (oldGlyphId)
+            if (GlyphPropertiesEntry const* oldEntry = sGlyphPropertiesStore.LookupEntry(oldGlyphId))
+                player->RemoveAurasDueToSpell(oldEntry->SpellId);
+
         player->SetGlyph(slotIndex, glyphId, true);
         player->SendTalentsInfoData(false); // Also handles GlyphData
+
+        // Apply the effect of the new glyph if it exists
+        if (glyphId)
+            if (GlyphPropertiesEntry const* glyphEntry = sGlyphPropertiesStore.LookupEntry(glyphId))
+                player->CastSpell(player, glyphEntry->SpellId, TriggerCastFlags(TRIGGERED_FULL_MASK & ~(TRIGGERED_IGNORE_SHAPESHIFT | TRIGGERED_IGNORE_CASTER_AURASTATE)));
 
         return 0;
     }
