@@ -16,7 +16,7 @@
 
 > [!NOTE]
 > **This fork targets the CoA core, [Brytenwally/azerothcore-wotlk-coa](https://github.com/Brytenwally/azerothcore-wotlk-coa).**
-> Clone it into `modules/mod-ale` (not `mod-ale-master`). Differences from upstream ALE:
+Differences from upstream ALE:
 > - `PLAYER_EVENT_ON_TARGET_CHANGED` (81) can still be registered but never fires: the CoA core has no
 >   target-changed hook.
 > - The Player travel-stat methods (`GetTravelStat*`, `AddTravelStat*`, `RemoveTravelStat*`) are removed: the CoA
