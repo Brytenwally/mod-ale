@@ -14,6 +14,14 @@
 > [!IMPORTANT]
 > **ALE** is an independent Lua scripting engine specifically designed for AzerothCore. This project has **diverged from the original Eluna project** and is no longer compatible with standard Eluna scripts. Scripts written for ALE will not work with the original Eluna engine and vice versa.
 
+> [!NOTE]
+> **This fork targets the CoA core, [Brytenwally/azerothcore-wotlk-coa](https://github.com/Brytenwally/azerothcore-wotlk-coa).**
+> Clone it into `modules/mod-ale` (not `mod-ale-master`). Differences from upstream ALE:
+> - `PLAYER_EVENT_ON_TARGET_CHANGED` (81) can still be registered but never fires: the CoA core has no
+>   target-changed hook.
+> - The Player travel-stat methods (`GetTravelStat*`, `AddTravelStat*`, `RemoveTravelStat*`) are removed: the CoA
+>   core does not track travel stats.
+
 ## 🚀 Overview
 
 ALE is a powerful, AzerothCore-specific implementation of a Lua scripting engine that enables server administrators and developers to create custom gameplay features, events, and mechanics without modifying the core server code.

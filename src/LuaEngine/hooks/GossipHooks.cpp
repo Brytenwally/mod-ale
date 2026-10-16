@@ -116,7 +116,8 @@ bool ALE::OnGossipHello(Player* pPlayer, Creature* pCreature)
 bool ALE::OnGossipSelect(Player* pPlayer, Creature* pCreature, uint32 sender, uint32 action)
 {
     START_HOOK_WITH_RETVAL(CreatureGossipBindings, GOSSIP_EVENT_ON_SELECT, pCreature->GetEntry(), false);
-    auto originalMenu = *pPlayer->PlayerTalkClass;
+    GossipMenu originalGossipMenu = pPlayer->PlayerTalkClass->GetGossipMenu();
+    QuestMenu originalQuestMenu = pPlayer->PlayerTalkClass->GetQuestMenu();
     pPlayer->PlayerTalkClass->ClearMenus();
     Push(pPlayer);
     Push(pCreature);
@@ -124,7 +125,8 @@ bool ALE::OnGossipSelect(Player* pPlayer, Creature* pCreature, uint32 sender, ui
     Push(action);
     auto preventDefault = CallAllFunctionsBool(CreatureGossipBindings, key, true);
     if (!preventDefault) {
-        *pPlayer->PlayerTalkClass = originalMenu;
+        pPlayer->PlayerTalkClass->GetGossipMenu() = originalGossipMenu;
+        pPlayer->PlayerTalkClass->GetQuestMenu() = originalQuestMenu;
     }
     return preventDefault;
 }
@@ -132,7 +134,8 @@ bool ALE::OnGossipSelect(Player* pPlayer, Creature* pCreature, uint32 sender, ui
 bool ALE::OnGossipSelectCode(Player* pPlayer, Creature* pCreature, uint32 sender, uint32 action, const char* code)
 {
     START_HOOK_WITH_RETVAL(CreatureGossipBindings, GOSSIP_EVENT_ON_SELECT, pCreature->GetEntry(), false);
-    auto originalMenu = *pPlayer->PlayerTalkClass;
+    GossipMenu originalGossipMenu = pPlayer->PlayerTalkClass->GetGossipMenu();
+    QuestMenu originalQuestMenu = pPlayer->PlayerTalkClass->GetQuestMenu();
     pPlayer->PlayerTalkClass->ClearMenus();
     Push(pPlayer);
     Push(pCreature);
@@ -141,7 +144,8 @@ bool ALE::OnGossipSelectCode(Player* pPlayer, Creature* pCreature, uint32 sender
     Push(code);
     auto preventDefault = CallAllFunctionsBool(CreatureGossipBindings, key, true);
     if (!preventDefault) {
-        *pPlayer->PlayerTalkClass = originalMenu;
+        pPlayer->PlayerTalkClass->GetGossipMenu() = originalGossipMenu;
+        pPlayer->PlayerTalkClass->GetQuestMenu() = originalQuestMenu;
     }
     return preventDefault;
 }

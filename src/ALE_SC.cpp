@@ -646,8 +646,7 @@ public:
         PLAYERHOOK_CAN_RESURRECT,
         PLAYERHOOK_ON_PLAYER_RELEASED_GHOST,
         PLAYERHOOK_ON_BEFORE_LOGOUT,
-        PLAYERHOOK_ON_PLAYER_JUST_DIED,
-        PLAYERHOOK_ON_TARGET_CHANGED
+        PLAYERHOOK_ON_PLAYER_JUST_DIED
     }) { }
 
     void OnPlayerResurrect(Player* player, float /*restore_percent*/, bool& /*applySickness*/) override
@@ -773,11 +772,6 @@ public:
     void OnPlayerJustDied(Player* player) override
     {
         sALE->OnPlayerJustDied(player);
-    }
-
-    void OnPlayerTargetChanged(Player* player, Unit* oldTarget, Unit* newTarget) override
-    {
-        sALE->OnPlayerTargetChanged(player, oldTarget, newTarget);
     }
 
     void OnPlayerLevelChanged(Player* player, uint8 oldLevel) override
@@ -1367,7 +1361,8 @@ public:
         }
     }
 
-    uint32 DealDamage(Unit* AttackerUnit, Unit* pVictim, uint32 damage, DamageEffectType damagetype) override
+    uint32 DealDamage(Unit* AttackerUnit, Unit* pVictim, uint32 damage, DamageEffectType damagetype,
+        std::optional<uint32>* /*scriptHealthLeechDamage*/) override
     {
         if (!AttackerUnit || !pVictim) return damage;
 
