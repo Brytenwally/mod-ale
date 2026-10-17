@@ -1480,15 +1480,6 @@ namespace LuaGlobalFunctions
         return 0;
     }
 
-#if defined(MOD_PLAYERBOTS)
-    static int DBQueryAsync(lua_State* L, PlayerbotsDatabasePool&)
-    {
-        ALE::CHECKVAL<char const*>(L, 1);
-        luaL_checktype(L, 2, LUA_TFUNCTION);
-        return luaL_error(
-            L, "PlayerbotsDBQueryAsync is unavailable because the playerbots database pool is synchronous");
-    }
-#endif
 
     /**
      * Executes a SQL query on the world database and returns an [ALEQuery].

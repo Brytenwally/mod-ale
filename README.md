@@ -21,6 +21,8 @@ Differences from upstream ALE:
 >   target-changed hook.
 > - The Player travel-stat methods (`GetTravelStat*`, `AddTravelStat*`, `RemoveTravelStat*`) are removed: the CoA
 >   core does not track travel stats.
+> - With the CoA mod-playerbots, the playerbots database is the core's own pool, so `PlayerbotsDBQueryAsync` works
+>   like the other async queries; `Player:IsBot()` uses the core's `WorldSession::IsBot()`.
 
 ## 🚀 Overview
 
